@@ -1,21 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 import ScrollContainer from "react-indiana-drag-scroll";
-// import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function SaleShock({ products }) {
-  var settings = {
-    dots: false,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-  };
   return (
-    <div className="relative">
+    <div className="relative mb-10">
       <div className="relative mb-[55px]">
         <h2 className="text-3xl mb-6 font-bold">Giảm giá sốc</h2>
       </div>
-      <ScrollContainer className="grid grid-flow-col" horizontal={true}>
+      <ScrollContainer className="grid grid-flow-col mb-9" horizontal={true}>
         {products.map(
           (product) =>
             product.sale && (
@@ -25,13 +18,8 @@ export default function SaleShock({ products }) {
               >
                 <img
                   src={product.mainImage}
-                  alt="image"
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    objectFit: "cover",
-                    margin: "auto",
-                  }}
+                  alt={product.title}
+                  className="w-[250px] h-[200px] object-cover m-auto"
                 />
                 <div className="px-4 h-[100px]">
                   <Link href="#">

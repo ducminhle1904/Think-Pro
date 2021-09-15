@@ -4,6 +4,7 @@ import { getData } from "../utils/fetchData";
 import Header from "../components/Header/Header";
 import News from "../components/News/News";
 import SaleShock from "../components/SaleShock/SaleShock";
+import Laptop from "../components/Laptop/Laptop";
 import React, { useState, useContext, useEffect } from "react";
 import { DataContext } from "../store/GlobalState";
 
@@ -30,6 +31,7 @@ export default function Home({ productProps }) {
         <section className="container mx-auto">
           <News />
           <SaleShock products={products} />
+          <Laptop products={products} />
         </section>
       </main>
     </div>
