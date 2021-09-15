@@ -3,7 +3,7 @@ module.exports = {
     domains: ["thinkpro.vn", "res.cloudinary.com"],
   },
   env: {
-    BASE_URL: "http://localhost:3000",
+    BASE_URL: "https://think-pro.vercel.app",
     MONGODB_URL:
       "mongodb+srv://ducminh1904:khongchobiet123@cluster0.lpnqr.mongodb.net/thinkpro?retryWrites=true&w=majority",
     ACCESS_TOKEN_SECRET: "somethingsecret",
