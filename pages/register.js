@@ -48,7 +48,7 @@ export default function Register() {
         <title>Register</title>
       </Head>
       <img
-        src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631523384/ThinkPro/austin-poon-JO_S6ewBqAk-unsplash_wksujv.jpg"
+        src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631778894/ThinkPro/austin-poon-JO_S6ewBqAk-unsplash_wksujv_wjaslt.jpg"
         alt="img"
         style={{ height: "100vh", width: "50%", objectFit: "cover" }}
       />

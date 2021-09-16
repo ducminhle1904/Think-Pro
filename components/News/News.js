@@ -20,25 +20,25 @@ export default function News() {
           <Slider {...settings}>
             <div>
               <img
-                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631454171/ThinkPro/Trung_thu_808x288_zlvvfb.jpg"
+                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631779188/ThinkPro/Trung_thu_808x288_zlvvfb_ziyxgw.jpg"
                 alt="trungthu"
               />
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631454216/ThinkPro/808x288_copy_efq9dj.jpg"
+                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631779135/ThinkPro/808x288_copy_efq9dj_eh9rka.jpg"
                 alt="trungthu"
               />
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631454164/ThinkPro/808x288-2_copy_rdyepy.jpg"
+                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631779279/ThinkPro/808x288-2_copy_rdyepy_eg1z3y.jpg"
                 alt="trungthu"
               />
             </div>
             <div>
               <img
-                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631454168/ThinkPro/KV_back2school-808x288_copy_gkt9ib.jpg"
+                src="https://res.cloudinary.com/dppndtfp8/image/upload/v1631779247/ThinkPro/KV_back2school-808x288_copy_gkt9ib_ziuyxa.jpg"
                 alt="trungthu"
               />
             </div>

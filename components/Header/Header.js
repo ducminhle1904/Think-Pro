@@ -71,7 +71,7 @@ export default function Header() {
             </Link>
           </li>
           <li className="relative">
-            <Link href="#">
+            <Link href="/cart">
               <a className="w-[56px] h-[56px] hover:bg-gray-100 hover:text-[#06c1d5] rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
