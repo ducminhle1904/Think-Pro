@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { SearchIcon, MenuIcon, UserCircleIcon } from "@heroicons/react/solid";
 import "reactjs-popup/dist/index.css";
@@ -22,7 +21,12 @@ export default function Header() {
     <header className="top-0 w-screen z-50 shadow-sm p-5 md:px-10 transition duration-100">
       <div className="container relative mx-auto w-full grid grid-cols-3">
         <div className="flex items-center">
-          <img src="https://thinkpro.vn/images/logo.svg" alt="logo" />
+          <Link href="/">
+            <a>
+              <img src="https://thinkpro.vn/images/logo.svg" alt="logo" />
+            </a>
+          </Link>
+
           <div className="ml-6 min-w-[220px]">
             <ul className="flex justify-between items-center text-lg">
               <li className="cursor-pointer relative leading-8 w-20 text-center">
@@ -85,6 +89,9 @@ export default function Header() {
                 </svg>
               </a>
             </Link>
+            <span className="absolute font-semibold text-xs flex items-center justify-center w-6 h-6 rounded-full top-[2px] left-[35px] bg-[#06c1d5]">
+              {cart.length}
+            </span>
           </li>
           <li className="relative group">
             {Object.keys(auth).length === 0 ? (

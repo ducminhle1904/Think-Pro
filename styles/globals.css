@@ -145,3 +145,11 @@ html::-webkit-scrollbar-thumb {
 .block-cube.block-cube-hover:hover .bg .bg-inner {
   top: 100%;
 }
+
+/* Disabled button */
+[aria-current="page"] {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}

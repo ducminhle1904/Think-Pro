@@ -128,7 +128,7 @@ export default function Laptop({ products }) {
                 className="w-[200px] h-[150px] md:w-[250px] md:h-[200px] object-cover m-auto"
               />
               <div className="px-4 h-[100px]">
-                <Link href="#">
+                <Link href={`product/${product._id}`}>
                   <a className="font-semibold">{product.title}</a>
                 </Link>
                 <div className="text-[#d53b2a] font-medium text-lg">

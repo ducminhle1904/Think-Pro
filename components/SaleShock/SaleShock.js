@@ -1,8 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 import ScrollContainer from "react-indiana-drag-scroll";
+import { addToCart } from "../../store/Actions";
+import { DataContext } from "../../store/GlobalState";
 
 export default function SaleShock({ products }) {
+  const { state, dispatch } = useContext(DataContext);
+  const { cart, auth } = state;
   return (
     <div className="relative mb-10">
       <div className="relative mb-[55px]">
@@ -22,7 +26,7 @@ export default function SaleShock({ products }) {
                   className="w-[250px] h-[200px] object-cover m-auto"
                 />
                 <div className="px-4 h-[100px]">
-                  <Link href="#">
+                  <Link href={`product/${product._id}`}>
                     <a className="font-semibold">{product.title}</a>
                   </Link>
                   <div className="text-[#d53b2a] font-medium text-lg">
@@ -32,7 +36,10 @@ export default function SaleShock({ products }) {
 
                 <div className="p-4 text-center">
                   <Link href="#">
-                    <a className="w-full text-white py-3 mb-2 leading-4 font-semibold block rounded-full bg-[#06c1d4]">
+                    <a
+                      className="w-full text-white py-3 mb-2 leading-4 font-semibold block rounded-full bg-[#06c1d4]"
+                      onClick={() => dispatch(addToCart(product, cart))}
+                    >
                       Thêm vào giỏ hàng
                     </a>
                   </Link>

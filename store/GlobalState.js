@@ -29,6 +29,16 @@ export const DataProvider = ({ children }) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const next_cart = JSON.parse(localStorage.getItem("next_cart"));
+    if (next_cart) dispatch({ type: "ADD_CART", payload: next_cart });
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("next_cart", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <DataContext.Provider value={{ state, dispatch }}>
       {children}
