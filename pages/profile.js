@@ -10,12 +10,13 @@ import Link from "next/link";
 export default function Profile() {
   const initialState = {
     avatar: "",
+    email: "",
     name: "",
     password: "",
     cf_password: "",
   };
   const [data, setData] = useState(initialState);
-  const { avatar, name, password, cf_password } = data;
+  const { avatar,email, name, password, cf_password } = data;
   const { state, dispatch } = useContext(DataContext);
   const { auth, notify, orders } = state;
 
