@@ -39,6 +39,19 @@ export const DataProvider = ({ children }) => {
     localStorage.setItem("next_cart", JSON.stringify(cart));
   }, [cart]);
 
+  useEffect(() => {
+    if (auth.token) {
+      getData("order", auth.token).then((res) => {
+        if (res.err)
+          return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+        dispatch({ type: "ADD_ORDERS", payload: res.orders });
+      });
+    } else {
+      dispatch({ type: "ADD_ORDERS", payload: [] });
+      dispatch({ type: "ADD_USERS", payload: [] });
+    }
+  }, [auth.token]);
+
   return (
     <DataContext.Provider value={{ state, dispatch }}>
       {children}

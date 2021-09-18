@@ -45,6 +45,7 @@ export default class MyDocument extends Document {
             content="Hệ thống trải nghiệm và bán lẻ Laptop, PC giá tốt, tư vấn chính xác, bảo hành tận tâm"
           />
           <link rel="icon" href="/favicon.svg" />
+          <script src="https://www.paypal.com/sdk/js?client-id=ARyIDpih3200B5PrdFKm2XjduxkSxrexEtPtVr6jTB04moy3TGHVL01rBhUwPMhFZM2Pjc1vc5I70Aly"></script>
         </Head>
         <body>
           <Main />

@@ -113,8 +113,11 @@ const DetailProduct = (props) => {
               Giá từ: {product.price} <u>đ</u>
             </strong>
             <Link href="#">
-              <a className="flex items-center px-3 md:px-8 py-10px md:py-3 space-x-2 text-sm md:text-lg font-semibold bg-[#06c1d4] text-white rounded-full">
-                Thông báo khi hàng về
+              <a
+                className="flex items-center px-3 md:px-8 py-10px md:py-3 space-x-2 text-sm md:text-lg font-semibold bg-[#06c1d4] text-white rounded-full"
+                onClick={() => dispatch(addToCart(product, cart))}
+              >
+                Thêm vào giỏ hàng
               </a>
             </Link>
           </div>

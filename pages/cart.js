@@ -1,20 +1,16 @@
 import Head from "next/head";
 import { useContext, useState, useEffect } from "react";
 import { DataContext } from "../store/GlobalState";
-import CartItem from "../components/CartItem/CartItem";
+import { increase, decrease, deleteItem } from "../store/Actions";
 import Header from "../components/Header/Header";
 import Link from "next/link";
 import { getData, postData } from "../utils/fetchData";
-import { useRouter } from "next/router";
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const { cart, auth, orders } = state;
   const [total, setTotal] = useState(0);
-  const [address, setAddress] = useState("");
-  const [mobile, setMobile] = useState("");
   const [callback, setCallback] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const getTotal = () => {
@@ -69,18 +65,12 @@ const Cart = () => {
         },
       });
     }
-    dispatch({
-      type: "NOTIFY",
-      payload: {
-        loading: true,
-      },
-    });
   };
   if (cart.length === 0) return <h2>Cart is empty</h2>;
   return (
     <>
       <Head>
-        <title>Cart</title>
+        <title>Giỏ hàng</title>
       </Head>
       <Header />
       <main className="md:pt-6 mb-auto border-t border-gray-100 md:border-t-0">
@@ -98,21 +88,69 @@ const Cart = () => {
                   <div className="px-0 md:px-4 py-4 border-b border-gray-100 last:border-b-0">
                     <div className="flex flex-col">
                       {cart.map((item) => (
-                        <div className="flex items-center">
-                          <div className="mr-6 w-20 h-20 md:w-[168px] md:h-[168px]">
+                        <div
+                          className="flex items-center border-b-[1px]"
+                          key={item._id}
+                        >
+                          <div className="mr-6 w-20 h-20 md:w-[168px] md:h-[168px] border-r-[1px] flex items-center">
                             <Link href={`product/${item._id}`}>
                               <a>
                                 <img src={item.mainImage} alt={item.title} />
                               </a>
                             </Link>
                           </div>
+
                           <div className="flex-1 space-y-2">
                             <h3 className="text-base md:text-xl font-semibold">
                               <Link href={`product/${item._id}`}>
                                 <a>{item.title}</a>
                               </Link>
                             </h3>
-                            <h2>Giá: {item.price}</h2>
+                            <h2>
+                              Giá: {item.price} <u>đ</u>
+                            </h2>
+                            {item.inStock > 0 ? (
+                              <p className="mb-1 text-danger">
+                                In stock: {item.inStock}
+                              </p>
+                            ) : (
+                              <p className="mb-1 text-danger">Out of stock</p>
+                            )}
+                            <span>Đã bán: {item.sold}</span>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <div className="flex items-center">
+                              <button
+                                className="text-2xl"
+                                onClick={() =>
+                                  dispatch(decrease(cart, item._id))
+                                }
+                                disabled={item.quantity === 1 ? true : false}
+                              >
+                                -
+                              </button>
+                              <span className="px-4">{item.quantity}</span>{" "}
+                              <button
+                                className="text-2xl"
+                                onClick={() =>
+                                  dispatch(increase(cart, item._id))
+                                }
+                                disabled={
+                                  item.quantity === item.inStock ? true : false
+                                }
+                              >
+                                +
+                              </button>
+                            </div>
+                            <div
+                              className="cursor-pointer"
+                              onClick={() =>
+                                dispatch(deleteItem(cart, item._id, "ADD_CART"))
+                              }
+                            >
+                              Xóa
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -125,17 +163,22 @@ const Cart = () => {
                 <div className="py-4 space-y-4 border-t md:border border-gray-100">
                   <div className="flex justify-between px-0 md:px-4 border-b border-gray-100 pb-4">
                     <div className="font-bold text-sm">Tạm tính: </div>
-                    <div className="text-base">{total}</div>
+                    <div className="text-base">
+                      {total} <u>đ</u>
+                    </div>
                   </div>
                   <div className="flex justify-between items-center px-0 md:px-4 border-b border-gray-100 pb-4">
                     <div className="font-bold text-sm">Thành tiền: </div>
                     <div className="text-lg text-red-400 font-bold">
-                      {total}
+                      {total} <u>đ</u>
                     </div>
                   </div>
                   <div className="px-0 md:px-4">
-                    <Link href="#">
-                      <a className="mb-4 block w-full px-8 py-3 rounded-full bg-[#06c1d5] text-white text-base font-bold text-center">
+                    <Link href={auth.user ? "/orderInfo" : "/signin"}>
+                      <a
+                        className="mb-4 block w-full px-8 py-3 rounded-full bg-[#06c1d5] text-white text-base font-bold text-center"
+                        onClick={handlePayment}
+                      >
                         Tiến hành đặt hàng
                       </a>
                     </Link>
