@@ -79,7 +79,7 @@ export default function Profile() {
                         type="text"
                         name="email"
                         id="email"
-                        defaultValue={auth.user.email}
+                        value={email}
                         disabled={true}
                         onChange={handleChange}
                         autoComplete="family-name"
