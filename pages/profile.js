@@ -16,11 +16,9 @@ export default function Profile() {
     cf_password: "",
   };
   const [data, setData] = useState(initialState);
-<<<<<<< HEAD
+
   const { avatar, email, name, password, cf_password } = data;
-=======
-  const { avatar,email, name, password, cf_password } = data;
->>>>>>> 363a9ac2c89320c16922e48bbaceb86581cc256e
+
   const { state, dispatch } = useContext(DataContext);
   const { auth, notify, orders } = state;
 
