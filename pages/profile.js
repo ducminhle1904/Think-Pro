@@ -10,17 +10,23 @@ import Link from "next/link";
 export default function Profile() {
   const initialState = {
     avatar: "",
+    email: "",
     name: "",
     password: "",
     cf_password: "",
   };
   const [data, setData] = useState(initialState);
-  const { avatar, name, password, cf_password } = data;
+<<<<<<< HEAD
+  const { avatar, email, name, password, cf_password } = data;
+=======
+  const { avatar,email, name, password, cf_password } = data;
+>>>>>>> 363a9ac2c89320c16922e48bbaceb86581cc256e
   const { state, dispatch } = useContext(DataContext);
   const { auth, notify, orders } = state;
 
   useEffect(() => {
-    if (auth.user) setData({ ...data, name: auth.user.name });
+    if (auth.user)
+      setData({ ...data, name: auth.user.name, email: auth.user.email });
   }, [auth.user]);
 
   const handleChange = (e) => {
@@ -31,10 +37,71 @@ export default function Profile() {
 
   const handleUpdateProfile = (e) => {
     e.preventDefault();
+    if (password) {
+      const errMsg = valid(name, auth.user.email, password, cf_password);
+      if (errMsg)
+        return dispatch({ type: "NOTIFY", payload: { error: errMsg } });
+      updatePassword();
+    }
+    if (name !== auth.user.name || avatar) updateInfo();
   };
 
-  const changeAvatar = (e) => {};
-  const updateInfo = async (e) => {};
+  const updatePassword = (e) => {
+    dispatch({ type: "NOTIFY", payload: { loading: true } });
+    patchData("user/resetPassword", { password }, auth.token).then((res) => {
+      if (res.err)
+        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+      return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+    });
+  };
+
+  const updateInfo = async (e) => {
+    let media;
+    dispatch({ type: "NOTIFY", payload: { loading: true } });
+
+    if (avatar) media = await imageUpload([avatar]);
+    patchData(
+      "user",
+      {
+        name,
+        avatar: avatar ? media[0].url : auth.user.avatar,
+      },
+      auth.token
+    ).then((res) => {
+      if (res.err)
+        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+      dispatch({
+        type: "AUTH",
+        payload: {
+          token: auth.token,
+          user: res.user,
+        },
+      });
+      return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+    });
+  };
+
+  const changeAvatar = (e) => {
+    const file = e.target.files[0];
+    if (!file)
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "File does not exist" },
+      });
+    if (file.size > 1024 * 1024)
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "The largest image is 1MB" },
+      });
+    if (file.type !== "image/jpeg" && file.type !== "image/png")
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "Image format is incorrect" },
+      });
+    setData({ ...data, avatar: file });
+  };
+
+  if (!auth.user) return null;
 
   return (
     <>
@@ -64,7 +131,7 @@ export default function Profile() {
                         placeholder="Your name"
                         onChange={handleChange}
                         autoComplete="given-name"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
+                        className="mt-1 py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
@@ -79,11 +146,11 @@ export default function Profile() {
                         type="text"
                         name="email"
                         id="email"
-                        defaultValue={auth.user.email}
+                        value={email}
                         disabled={true}
                         onChange={handleChange}
                         autoComplete="family-name"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
+                        className="mt-1 py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
                   </div>
@@ -101,10 +168,9 @@ export default function Profile() {
                         name="password"
                         id="password"
                         value={password}
-                        placeholder="Your new password"
                         onChange={handleChange}
                         autoComplete="given-name"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
+                        className="mt-1 py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
 
@@ -116,14 +182,13 @@ export default function Profile() {
                         Confirm New Password
                       </label>
                       <input
-                        type="text"
+                        type="password"
                         name="cf_password"
                         id="cf_password"
                         value={cf_password}
-                        placeholder="Confirm Your password"
                         onChange={handleChange}
                         autoComplete="family-name"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
+                        className="mt-1 py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-md sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
                   </div>
@@ -134,19 +199,21 @@ export default function Profile() {
                     </label>
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-[150px] w-[150px] rounded-full overflow-hidden bg-gray-100">
-                        <img
-                          src={
-                            avatar
-                              ? URL.createObjectURL(avatar)
-                              : auth.user.avatar
-                          }
-                          alt="avatar"
-                          style={{
-                            height: "100%",
-                            width: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
+                        {auth.user && auth.user.avatar && (
+                          <img
+                            src={
+                              avatar
+                                ? URL.createObjectURL(avatar)
+                                : auth.user.avatar
+                            }
+                            alt="avatar"
+                            style={{
+                              height: "100%",
+                              width: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )}
                       </span>
                     </div>
                   </div>

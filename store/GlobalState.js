@@ -46,6 +46,14 @@ export const DataProvider = ({ children }) => {
           return dispatch({ type: "NOTIFY", payload: { error: res.err } });
         dispatch({ type: "ADD_ORDERS", payload: res.orders });
       });
+
+      if (auth.user.role === "admin") {
+        getData("user", auth.token).then((res) => {
+          if (res.err)
+            return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+          dispatch({ type: "ADD_USERS", payload: res.users });
+        });
+      }
     } else {
       dispatch({ type: "ADD_ORDERS", payload: [] });
       dispatch({ type: "ADD_USERS", payload: [] });
